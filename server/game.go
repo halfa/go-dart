@@ -6,6 +6,7 @@ import (
 	"go-dart/common"
 )
 
+// Game describe all the possible actions on a game mode
 type Game interface {
 	Start() error
 	AddPlayer(name string) error

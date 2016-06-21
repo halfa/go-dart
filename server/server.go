@@ -12,16 +12,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Server hold all the games, in progress or terminated
 type Server struct {
 	games map[int]Game
 }
 
+// NewServer is a constructor for a Server struct
 func NewServer() *Server {
 	server := new(Server)
 	server.games = make(map[int]Game)
 	return server
 }
 
+// Start create a new game in the server context
 func (server *Server) Start() {
 	fmt.Println("Ready to Dart !!")
 	r := gin.Default()
@@ -29,7 +32,7 @@ func (server *Server) Start() {
 	// creation du jeu (POST) -  fournit le type de jeu
 	r.POST("/games", server.createNewGameHandler) // retourne un id
 	// etat du jeu (GET)
-	r.GET("/games/:gameId", server.findGameByIdHandler)
+	r.GET("/games/:gameId", server.findGameByIDHandler)
 	// // creation du joueur (POST) -> retourne joueur
 	r.POST("/games/:gameId/players", server.addPlayerToGameHandler)
 	// // etat joueur
@@ -94,7 +97,7 @@ func gameFactory(style string) (result Game, err error) {
 	}
 }
 
-func (server *Server) findGameByIdHandler(c *gin.Context) {
+func (server *Server) findGameByIDHandler(c *gin.Context) {
 	gameID, err := strconv.Atoi(c.Param("gameId"))
 
 	if err != nil {

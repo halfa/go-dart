@@ -1,10 +1,12 @@
 package common
 
+// Sector is the representation of a target specific area
 type Sector struct {
 	Val int
 	Pos int
 }
 
+// IsValid put some constraints on the Sector fields
 func (s Sector) IsValid() bool {
 	if s.Val == 0 {
 		return s.Pos == 0
@@ -63,6 +65,7 @@ const (
 	OVER
 )
 
+// GameState hold all information about a game in progress
 type GameState struct {
 	Players       []PlayerState
 	Ongoing       State
@@ -73,6 +76,7 @@ type GameState struct {
 	Round         int
 }
 
+// NewGameState is a GameState constructor
 func NewGameState() *GameState {
 
 	g := new(GameState)
