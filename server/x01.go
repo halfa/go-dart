@@ -8,6 +8,7 @@ import (
 	"sort"
 )
 
+// Gamex01 describe a X01 game
 type Gamex01 struct {
 	AGame
 	score     int
@@ -15,11 +16,13 @@ type Gamex01 struct {
 	accu      int
 }
 
+// Optionx01 define the allowed opetions of a X01 game
 type Optionx01 struct {
 	Score     int
 	DoubleOut bool
 }
 
+// NewGamex01 initialise a new X01 game
 func NewGamex01(opt Optionx01) *Gamex01 {
 	g := new(Gamex01)
 	g.doubleOut = opt.DoubleOut
@@ -29,6 +32,7 @@ func NewGamex01(opt Optionx01) *Gamex01 {
 	return g
 }
 
+// AddPlayer to a X01 game
 func (game *Gamex01) AddPlayer(name string) (error error) {
 	if game.State.Ongoing == common.INITIALIZING || game.State.Ongoing == common.READY {
 		log.WithFields(log.Fields{"player": name}).Infof("Player added to the game")
@@ -41,6 +45,7 @@ func (game *Gamex01) AddPlayer(name string) (error error) {
 	return
 }
 
+// Start a X01 game
 func (game *Gamex01) Start() (error error) {
 	if game.State.Ongoing == common.READY && len(game.State.Players) > 0 && game.score > 0 {
 		state := game.State
@@ -57,6 +62,7 @@ func (game *Gamex01) Start() (error error) {
 	return
 }
 
+// HandleDart must be called when a dart hit the target
 func (game *Gamex01) HandleDart(sector common.Sector) (result *common.GameState, error error) {
 
 	if game.State.Ongoing == common.READY {
@@ -149,7 +155,7 @@ func (game *Gamex01) nextDart() {
 	if state.CurrentDart == 2 {
 		game.nextPlayer()
 	} else {
-		state.CurrentDart += 1
+		state.CurrentDart++
 		log.WithFields(log.Fields{"player": state.CurrentPlayer, "dart": state.CurrentDart}).Info("One more dart")
 	}
 }
